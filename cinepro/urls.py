@@ -13,13 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path
 from . import views
-app_name='cinepro'
+
+
+app_name = CineConfig.name
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('cartelera', views.index, name='index'),
-    path('pelicula/<idPelicula>', views.pelicula, name='pelicula'),
-    path('pelicula/<idPelicula>/confirmacion', views.pelicula, name='confirmacion')
+    path('pelicula/<int:idPelicula>', views.pelicula, name='pelicula'),
+    path('pelicula/<int:idPelicula>/confirmacion', views.pelicula, name='confirmacion')
 ]

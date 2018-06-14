@@ -12,18 +12,23 @@
     <div id="principal">
         <h1>Cines buenavista</h1>
         <div id="buscador">
-            <select>
-                {% for g in generos %}
-                  <option> {{ g }} </option>
-                {% endfor %}
+            <p>
+                <select>
+                    {% for g in listaGeneros %}
+                        <option> {{ g }} </option>
+                    {% endfor %}
 
-            </select>
+                </select>
 
+                <input id="busquedaTexto" type="text">
+
+                </input>
+            </p>
         </div>
 
         <div id="lista">
             <ul>
-                {% for e in lista %}
+                {% for e in listaPeliculas %}
                 <li> <a href="{% url 'cinepro:pelicula' e.idPelicula %}"> {{ e.titulo }}</a> </li>
                 {% endfor %}
             </ul>

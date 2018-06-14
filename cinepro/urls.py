@@ -17,7 +17,7 @@ from django.urls import path
 from . import views
 
 
-app_name = CineConfig.name
+app_name = 'cinepro'
 
 urlpatterns = [
     path('', views.index, name='index'),

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script type="text/jscript" src="../../static/js/cartelera.js"></script>
-        <link rel="stylesheet" href="../../statoc/css/cartelera.css" type="text/css">
+        <link rel="stylesheet" href="../../static/css/cartelera.css" type="text/css">
 
     <title>Cartelera cine</title>
 </head>
@@ -13,7 +13,8 @@
         <h1>Cines buenavista</h1>
         <div id="buscador">
             <p>
-                <select>
+                <select id ="select">
+                    <option genero="nulo">...</option>
                     {% for g in listaGeneros %}
                         <option> {{ g }} </option>
                     {% endfor %}
@@ -29,7 +30,7 @@
         <div id="lista">
             <ul>
                 {% for e in listaPeliculas %}
-                <li> <a href="{% url 'cinepro:pelicula' e.idPelicula %}"> {{ e.titulo }}</a> </li>
+                        <li genero="{{ e.genero }}"> <a href="pelicula/{{ e.idpelicula }}"> {{ e.titulo }}</a> </li>
                 {% endfor %}
             </ul>
 

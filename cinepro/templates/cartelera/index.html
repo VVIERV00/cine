@@ -24,7 +24,7 @@
         <div id="lista">
             <ul>
                 {% for e in lista %}
-                <li> <a href="{% url 'pelicula:e.idPelicula %}"> {{ e.titulo }}</a> </li>
+                <li> <a href="{% url 'cinepro:pelicula' e.idPelicula %}"> {{ e.titulo }}</a> </li>
                 {% endfor %}
             </ul>
 

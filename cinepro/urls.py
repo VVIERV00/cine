@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
-
+app_name='cinepro'
 urlpatterns = [
-    path('cartelera', views.index(), name='index'),
+    path('', views.index, name='index'),
+    path('cartelera', views.index, name='index'),
     path('pelicula/<idPelicula>', views.pelicula, name='pelicula'),
     path('pelicula/<idPelicula>/confirmacion', views.pelicula, name='confirmacion')
 ]

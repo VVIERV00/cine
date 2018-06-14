@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from .models import *
-from django.urls import reverse
+
 def index(peticion):
     try:
         lista = Pelicula.objects.all()
@@ -13,10 +13,10 @@ def index(peticion):
 
 def pelicula(peticion, idPelicula):
     try:
-        pelicula = Pelicula.objects.filter(idPelicula = idPelicula)
+        pelicula = Pelicula.objects.filter(idpelicula = idPelicula)
         comentarios = Comentario.objects.filter(pelicula = idPelicula)
 
     except:
         raise Http404("No se ha podido encontrar la pelicula %d".format(idPelicula))
-    return render(peticion, 'pelicula/index.html', {'pelicula':pelicula, 'comentarios':comentarios})
+    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios})
 

@@ -10,19 +10,32 @@
 </head>
 <body>
     <div id="izquierdo">
+        {% for pelicula in movie %}
         <div id="foto">
-
+            <img src="../../static/images/{{pelicula.titulo}}.jpg" alt="Smiley face" height="420" width="420">
         </div>
         <div id="datos">
+                <p>Título: {{pelicula.titulo}}</p>
+                <p>Director: {{pelicula.director}}</p>
+                <p>Género: {{pelicula.genero}}</p>
+                <p>Sinopsis:{{pelicula.sinopsis}} </p>
 
+            <p>Título: {{pelicula}}</p>
         </div>
+         {% endfor %}
         <div id="comentarios">
+            <h3>Comentarios:</h3>
+             <ul>
+                {% for coment in comentarios %}
+                        <li>{{coment.texto}}</li>
+                {% endfor %}
+            </ul>
 
             <p> <button id="botonComentar"></button><input id="textoComentario" type="text"> </input> </p>
         </div>
     </div>
 
-    <div id="derecho"> //aka el chungo
+    <div id="derecho">
         <div id="sesiones ">
 
 

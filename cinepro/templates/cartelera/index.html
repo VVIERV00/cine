@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script type="text/jscript" src="../../static/js/cartelera.js"></script>
+        <link rel="stylesheet" href="../../statoc/css/cartelera.css" type="text/css">
+
+    <title>Cartelera cine</title>
+</head>
+<body>
+    <div id="principal">
+        <h1>Cines buenavista</h1>
+        <div id="buscador">
+            <select>
+                {% for g in generos %}
+                  <option> {{ g }} </option>
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <div id="lista">
+            <ul>
+                {% for e in lista %}
+                <li> <a href="{% url 'pelicula:e.idPelicula %}"> {{ e.titulo }}</a> </li>
+                {% endfor %}
+            </ul>
+
+
+        </div>
+
+    </div>
+
+</body>
+</html>

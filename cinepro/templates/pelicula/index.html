@@ -37,8 +37,12 @@
 
     <div id="derecho">
         <div id="sesiones ">
-
-
+            <h3>Lista de Sesiones para esta pelicula:</h3>
+            <ul>
+                {% for e in sesiones %}
+                        <li>{{ e.fecha }} </li>
+                {% endfor %}
+            </ul>
         </div>
 
         <div id="salas">

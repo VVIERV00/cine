@@ -25,3 +25,14 @@ def pelicula(peticion, idPelicula):
         raise Http404("No se ha podido encontrar la pelicula %d".format(idPelicula))
     return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones})
 
+def enviarComentario(peticion):
+    if peticion.method == 'POST':
+        comentario = peticion.POST.get('comentario')
+        peli = peticion.POST.get('idPelicula')
+        objeto = Comentario(texto = comentario, pelicula = peli)
+        objeto.save()
+        respuesta = {}
+
+    else:
+        raise Http404("No se ha podido enviar el comentario, por lo que sea")
+

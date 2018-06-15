@@ -4,18 +4,8 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script type="text/jscript" src="../../static/js/pelicula.js"></script>
-    <style>
-.lado {
-    float: left;
-    width: 50%;
-    padding: 10px;
-}
-.todo:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-</style>
+    <link rel="stylesheet" href="../../static/css/pelicula.css" type="text/css">
+
 
     <title>{{pelicula.titulo}}</title>
 </head>
@@ -24,15 +14,13 @@
         <div class="lado">
             {% for pelicula in movie %}
             <div id="foto">
-                <img src="../../static/images/{{pelicula.titulo}}.jpg" alt="Smiley face" height="420" width="420">
+                <img src="../../static/images/{{pelicula.titulo}}.jpg" alt="Caratula" height="420" width="420">
             </div>
             <div id="datos">
-                    <p>Título: {{pelicula.titulo}}</p>
-                    <p>Director: {{pelicula.director}}</p>
-                    <p>Género: {{pelicula.genero}}</p>
-                    <p>Sinopsis:{{pelicula.sinopsis}} </p>
-
-                <p>Título: {{pelicula}}</p>
+                    <p><strong>Título: </strong> {{pelicula.titulo}}</p>
+                    <p><strong>Director: </strong>{{pelicula.director}}</p>
+                    <p><strong>Género: </strong>{{pelicula.genero}}</p>
+                    <p><strong>Sinopsis: </strong>{{pelicula.sinopsis}} </p>
             </div>
              {% endfor %}
             <div class="comentarios">
@@ -43,11 +31,11 @@
                     {% endfor %}
                 </ul>
 
-                <p> <button id="botonComentar"></button><input id="textoComentario" type="text"> </input> </p>
+                <p> <button id="botonComentar">Comentar</button><input id="textoComentario" type="text"> </input> </p>
             </div>
         </div>
 
-        <div id="lado">
+        <div class="lado">
             <div id="sesiones ">
                 <h3>Lista de Sesiones para esta pelicula:</h3>
                 <ul>

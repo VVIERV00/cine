@@ -1,11 +1,14 @@
 div{
     margin: 40px;
-
 }
 
 body{
+    background: #F5F0FF;
     max-width: 50%;
     margin: auto;
+}
+#datos{
+    border: solid black 2px;
 }
 
 a{
@@ -17,6 +20,7 @@ a{
 li{
   padding-bottom: 15px;
   margin-left: 25%;
+
 }
 select, input{
   margin: 15px;

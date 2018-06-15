@@ -13,6 +13,7 @@
         <h1>Cines buenavista</h1>
         <div id="buscador">
             <p>
+                Genero
                 <select id ="select">
                     <option genero="nulo">...</option>
                     {% for g in listaGeneros %}
@@ -20,7 +21,7 @@
                     {% endfor %}
 
                 </select>
-
+                Busca por titulo o director
                 <input id="busquedaTexto" type="text">
 
                 </input>
@@ -30,7 +31,7 @@
         <div id="lista">
             <ul>
                 {% for e in listaPeliculas %}
-                        <li genero="{{ e.genero }}"> <a href="pelicula/{{ e.idpelicula }}"> {{ e.titulo }}</a> </li>
+                        <li genero="{{ e.genero }}" titulo="{{ e.titulo }}" director="{{ e.director}}" > <a href="pelicula/{{ e.idpelicula }}"> {{ e.titulo }}</a> </li>
                 {% endfor %}
             </ul>
 

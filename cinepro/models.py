@@ -61,7 +61,7 @@ class Sesion(models.Model):
     idsesa = models.IntegerField(db_column='idSesa')  # Field name made lowercase.
 
     def __str__(self):
-        return self.fecha
+        return self.fecha.strftime('%m/%d/%Y')
     class Meta:
         managed = False
         db_table = 'sesion'

@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from .models import *
+import datetime
+
 
 def index(peticion):
     try:
-        lista = Pelicula.objects.all()
+        peliculasValidas = Sesion.objects.values('idpelicula').filter(fecha__gte=datetime.date.today())
+
+        lista = Pelicula.objects.filter(idpelicula__in=peliculasValidas)
         generos = {"acción", "romantica", "terror", "ciencia-ficcion"}
     except:
         raise Http404('No se ha podido encontrar la cartelera')

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from .models import *
+from .form import ComentarioForm
 import datetime
 
 
@@ -21,8 +22,21 @@ def pelicula(peticion, idPelicula):
         comentarios = Comentario.objects.filter(pelicula = idPelicula)
         sesiones = Sesion.objects.filter(idpelicula = idPelicula)
 
+        form = ComentarioForm(peticion.POST)
+        if form.is_valid():
+            post = form.save()
+            post.save()
+        else:
+            form = ComentarioForm()
+            form.fields['pelicula'].initial = idPelicula
+
+
     except:
         raise Http404("No se ha podido encontrar la pelicula %d".format(idPelicula))
-    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones})
+    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones, 'idPelicula':idPelicula, 'form': form})
+
+
+
+
 
 

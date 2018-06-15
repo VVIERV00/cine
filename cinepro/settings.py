@@ -80,7 +80,8 @@ DATABASES = {
         'NAME':'cinepro',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '/opt/lampp/var/mysql/mysql.sock'
+        'HOST': '/Application/XAMPP/xamppfiles/var/mysql/mysql.sock',
+        'PORT': '3306'
 
     }
 }

@@ -24,5 +24,4 @@ urlpatterns = [
     path('cartelera', views.index, name='index'),
     path('pelicula/<int:idPelicula>', views.pelicula, name='pelicula'),
     path('pelicula/<int:idPelicula>/confirmacion', views.pelicula, name='confirmacion'),
-    path('comentario/crear', views.enviarComentario, name="comentario")
 ]

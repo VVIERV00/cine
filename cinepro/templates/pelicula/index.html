@@ -5,8 +5,6 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script type="text/jscript" src="../../static/js/pelicula.js"></script>
     <link rel="stylesheet" href="../../static/css/pelicula.css" type="text/css">
-
-
     <title>{{pelicula.titulo}}</title>
 </head>
 <body>
@@ -21,7 +19,7 @@
                     <p><strong>Director: </strong>{{pelicula.director}}</p>
                     <p><strong>Género: </strong>{{pelicula.genero}}</p>
                     <p><strong>Sinopsis: </strong>{{pelicula.sinopsis}} </p>
-                    <p hidden="true" id="idPelicula">{{pelicula.idpelicula}} </p>
+                    <p hidden = "true" id="idPeliculaa">{{pelicula.idpelicula}} </p>
             </div>
              {% endfor %}
             <div class="comentarios">
@@ -32,7 +30,15 @@
                     {% endfor %}
                 </ul>
 
-                <p> <button id="botonComentar">Comentar</button><input id="textoComentario" type="text"> </input> </p>
+                {% block content %}
+                <h3>Añade un Comentario</h3>
+                <form method="POST" class="comentario-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="save btn btn-default">Añadir</button>
+                </form>
+                {% endblock %}
+
             </div>
         </div>
 
@@ -41,7 +47,7 @@
                 <h3>Lista de Sesiones para esta pelicula:</h3>
                 <ul>
                     {% for e in sesiones %}
-                            <li>{{ e.fecha }} </li>
+                            <li>{{ e.fecha }} </li> <button type="button">Mostrar Sesiones</button>
                     {% endfor %}
                 </ul>
             </div>

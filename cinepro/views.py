@@ -19,8 +19,9 @@ def pelicula(peticion, idPelicula):
     try:
         pelicula = Pelicula.objects.filter(idpelicula = idPelicula)
         comentarios = Comentario.objects.filter(pelicula = idPelicula)
+        sesiones = Sesion.objects.filter(idpelicula = idPelicula)
 
     except:
         raise Http404("No se ha podido encontrar la pelicula %d".format(idPelicula))
-    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios})
+    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones})
 

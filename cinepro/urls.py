@@ -25,6 +25,7 @@ urlpatterns = [
     path('pelicula/<int:idPelicula>', views.pelicula, name='pelicula'),
     path('pelicula/<int:idPelicula>/confirmacion', views.pelicula, name='confirmacion'),
     path('sesion/<int:fecha>/<int:pelicula>', views.sesion, name='sesion'),
-    path('sesion/<int:fecha>/<int:pelicula>/<int:sala>', views.sala, name='sala')
+    path('sesion/<int:fecha>/<int:pelicula>/<int:sala>', views.sala, name='sala'),
+    path('sesion/<int:fecha>/<int:pelicula>/<int:sala>/reservar', views.reservar, name='reservar')
 
 ]

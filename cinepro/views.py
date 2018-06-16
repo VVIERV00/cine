@@ -58,4 +58,14 @@ def sala(peticion, fecha, pelicula, sala):
     pass
 
 
+"""
+    metodo que rescata los objetos sesion y actualiza los valores necesarios 
+    es decir, el array de ocupacion (¡se enviaran y sacaran con POST!) y se hace un .save()
+    La idea es llamar a este metodo tantas veces como sesiones haya en la pagina
+    peliculas/index.html. habrá sesiones que no se tocan y otras que si, eso se 
+    lo dejamos a django.
 
+"""
+
+def reserva(peticion, fecha, pelicula, sala):
+    pass

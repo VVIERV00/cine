@@ -36,7 +36,26 @@ def pelicula(peticion, idPelicula):
     return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones, 'idPelicula':idPelicula, 'form': form})
 
 
+"""
+    metodo que devuelve un json 'salas' 
+    debe ser un array con el id de las salas que se solicitan segun la sesion
 
+
+"""
+
+def sesion(peticion, fecha, pelicula):
+    pass
+
+
+"""
+    metodo que devuelve un json 'sala' con el 
+    numero de filas, columnas y butacas de la ultima fila y tambien devuelve un 
+    array de ocupaciones que hay que sacar del objeto sesion. 
+
+
+"""
+def sala(peticion, fecha, pelicula, sala):
+    pass
 
 
 

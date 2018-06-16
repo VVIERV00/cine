@@ -43,20 +43,30 @@
         </div>
 
         <div class="lado">
-            <div id="sesiones ">
+            <div id="divSesiones ">
                 <h3>Lista de Sesiones para esta pelicula:</h3>
-                <ul>
+                <ul id="sesiones">
                     {% for e in sesiones %}
-                            <li>{{ e.fecha }} </li> <button type="button">Mostrar Sesiones</button>
+                            <li id='{{e.idsesion}}'> <a class="sesion" >{{ e.fecha }} </a></li>
                     {% endfor %}
                 </ul>
-            </div>
-
-            <div id="salas">
 
             </div>
 
-            <div id="reserva">
+            <div id="divSalas">
+
+                <ul id="salas">
+
+
+                </ul>
+
+            </div>
+
+            <div id="divReserva">
+                <ul id="butacas">
+
+
+                </ul>
 
             </div>
         </div>

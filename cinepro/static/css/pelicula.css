@@ -27,10 +27,20 @@ img{
     border: solid green 2px;
 }
 ul{
-  list-style-type: none;
+    list-style-type: none;
 }
 li{
     padding: 20px;
     font-style: oblique;
     display: inline-block;
+}
+a{
+    text-decoration: none;
+    font-size: 1.2em;
+    color: rgb(26, 26, 255);
+    padding: 10px;
+}
+
+input[checked = "true", type = "checkbox"]{
+    pointer-events: none;
 }

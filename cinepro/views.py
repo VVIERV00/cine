@@ -1,3 +1,5 @@
+from builtins import list
+
 from django.shortcuts import render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from .models import *
@@ -25,6 +27,16 @@ def pelicula(peticion, idPelicula):
         comentarios = Comentario.objects.filter(pelicula = idPelicula)
         sesiones = Sesion.objects.filter(idpelicula = idPelicula)
 
+        for sesion in sesiones:
+            id = sesion.idsesion
+
+        sesas = Sesa.objects.filter(idsesion = id)
+
+        for sesa in sesas:
+            idSala = sesa.idsala
+
+        salas = Sala.objects.filter(idsala =  idSala)
+
         form = ComentarioForm(peticion.POST)
         if form.is_valid():
             post = form.save()
@@ -36,7 +48,7 @@ def pelicula(peticion, idPelicula):
 
     except:
         raise Http404("No se ha podido encontrar la pelicula %d".format(idPelicula))
-    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones, 'id':idPelicula, 'form': form})
+    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones, 'id':idPelicula, 'form': form, 'listaSalas':salas, 'filas':range(salas[0].filas), 'columnas':range(salas[0].columnas), 'ultFila':range(salas[0].ultimafila)})
 
 
 """

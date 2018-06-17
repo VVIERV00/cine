@@ -54,8 +54,25 @@
 
             <div id="salas">
 
+                {{listaSalas}}
+                 {% for sala in listaSalas %}
+                    <p>Sala: {{sala.idsala}}</p>
+                    <p>{{sala}}</p>
+                    {% for fil in filas %}
+                        <div>
+                            {% for col in columnas %}
+                            <input type="checkbox" class="{{fil}}" id="{{col}}">
+                            {% endfor %}
+                        </div>
 
 
+                    {% endfor %}
+                    {% for f in ultFilas %}
+                        {% for col in columnas %}
+                            <input type="checkbox" class="ult_{{f}}" id="ult_{{col}}">
+                        {% endfor %}>
+                    {% endfor %}
+                 {% endfor %}
             </div>
 
             <div id="butacas">

@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from .models import *
 from .form import ComentarioForm
 import datetime
+from django.core import serializers
 
 
 def index(peticion):
@@ -44,7 +45,20 @@ def pelicula(peticion, idPelicula):
 """
 
 def sesion(peticion, fecha, pelicula):
-    pass
+
+    sesion = Sesion.objects.filter(fecha = fecha, idpelicula=pelicula)
+
+    list = []
+
+    for ses in sesion:
+        list.insert(ses.idsesion)
+
+    data = serializers.serialize('json', list)
+    print(data)
+
+    return render(peticion, 'pelicula/index.html',{'salas':data})
+
+
 
 
 """
@@ -55,7 +69,29 @@ def sesion(peticion, fecha, pelicula):
 
 """
 def sala(peticion, fecha, pelicula, sala):
-    pass
+
+    sala = Sala.objects.filter(idsala=sala)
+    sesion = Sesion.objects.filter(fecha=fecha, idpelicula=pelicula)
+
+    for ses in sesion:
+        id = ses.idsesion
+
+    sesa = Sesa.objects.filter(idsala = sala, idsesion = id)
+
+    list = []
+
+    for sa in sala:
+        list.insert(sa.filas)
+        list.insert(sa.columnas)
+        list.insert(sa.ultimafila)
+
+    for s in sesa:
+        list.insert(s.idsesion)
+
+    data = serializers.serialize('json', list)
+    print(data)
+
+    return render(peticion, 'pelicula/index.html', {'sala': data})
 
 
 """
@@ -67,5 +103,5 @@ def sala(peticion, fecha, pelicula, sala):
 
 """
 
-def reserva(peticion, fecha, pelicula, sala):
+def reservar(peticion, fecha, pelicula, sala):
     pass

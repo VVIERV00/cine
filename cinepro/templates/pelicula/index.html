@@ -47,7 +47,7 @@
                 <h3>Lista de Sesiones para esta pelicula:</h3>
                 <ul id="sesiones">
                     {% for e in sesiones %}
-                            <li id='{{e.idsesion}}'> <a class="sesion" >{{ e.fecha }} </a></li>
+                            <li id='{{e.idsesion}}'> <a class="sesion" href="../sesion//{{idPelicula}}">{{ e.fecha }}</a></li>
                     {% endfor %}
                 </ul>
 

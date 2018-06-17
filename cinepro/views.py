@@ -4,8 +4,10 @@ from .models import *
 from .form import ComentarioForm
 import datetime
 from django.core import serializers
-
-
+from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def index(peticion):
     try:
         peliculasValidas = Sesion.objects.values('idpelicula').filter(fecha__gte=datetime.date.today())
@@ -16,7 +18,7 @@ def index(peticion):
         raise Http404('No se ha podido encontrar la cartelera')
     return render(peticion, 'cartelera/index.html', {'listaPeliculas': lista, 'listaGeneros':generos})
 
-
+@csrf_exempt
 def pelicula(peticion, idPelicula):
     try:
         pelicula = Pelicula.objects.filter(idpelicula = idPelicula)
@@ -34,7 +36,7 @@ def pelicula(peticion, idPelicula):
 
     except:
         raise Http404("No se ha podido encontrar la pelicula %d".format(idPelicula))
-    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones, 'idPelicula':idPelicula, 'form': form})
+    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones, 'id':idPelicula, 'form': form})
 
 
 """
@@ -43,7 +45,7 @@ def pelicula(peticion, idPelicula):
 
 
 """
-
+@csrf_exempt
 def sesion(peticion, fecha, pelicula):
     try:
         sesion = Sesion.objects.filter(fecha = fecha, idpelicula=pelicula)
@@ -58,7 +60,7 @@ def sesion(peticion, fecha, pelicula):
     except:
         raise Http404('No se ha podido encontrar la sesion')
 
-    return render(peticion, 'pelicula/index.html',{'salas':data})
+    return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 
@@ -70,6 +72,7 @@ def sesion(peticion, fecha, pelicula):
 
 
 """
+@csrf_exempt
 def sala(peticion, fecha, pelicula, sala):
 
     try:
@@ -96,7 +99,7 @@ def sala(peticion, fecha, pelicula, sala):
     except:
         raise Http404('No se ha podido encontrar la sala')
 
-    return render(peticion, 'pelicula/index.html', {'sala': data})
+    return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 """
@@ -107,6 +110,6 @@ def sala(peticion, fecha, pelicula, sala):
     lo dejamos a django.
 
 """
-
+@csrf_exempt
 def reservar(peticion, fecha, pelicula, sala):
     pass

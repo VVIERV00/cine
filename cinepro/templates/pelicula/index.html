@@ -19,7 +19,7 @@
                     <p><strong>Director: </strong>{{pelicula.director}}</p>
                     <p><strong>Género: </strong>{{pelicula.genero}}</p>
                     <p><strong>Sinopsis: </strong>{{pelicula.sinopsis}} </p>
-                    <p hidden = "true" id="idPeliculaa">{{pelicula.idpelicula}} </p>
+                    <p hidden = "true" id="idPeliculaa" valor="{{id}}"></p>
             </div>
              {% endfor %}
             <div class="comentarios">
@@ -43,30 +43,23 @@
         </div>
 
         <div class="lado">
-            <div id="divSesiones ">
-                <h3>Lista de Sesiones para esta pelicula:</h3>
-                <ul id="sesiones">
+            <h3>Lista de Sesiones para esta pelicula:</h3>
+            <div id="sesiones ">
+
                     {% for e in sesiones %}
-                            <li id='{{e.idsesion}}'> <a class="sesion" href="../sesion//{{idPelicula}}">{{ e.fecha }}</a></li>
+                            <a id='{{e.idsesion}}' class="sesion" >{{ e.fecha }} </a>
                     {% endfor %}
-                </ul>
 
             </div>
 
-            <div id="divSalas">
-
-                <ul id="salas">
+            <div id="salas">
 
 
-                </ul>
 
             </div>
 
-            <div id="divReserva">
-                <ul id="butacas">
+            <div id="butacas">
 
-
-                </ul>
 
             </div>
         </div>

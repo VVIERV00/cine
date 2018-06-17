@@ -9,43 +9,53 @@ $(document).ready(function(){
     });
 
     $(".sesion").click(function(){
-        var sesion = $(this).parent().attr("id");
-        var pelicula = $("#idPeliculaa");
-      $.ajax({
-        url: '/sesion/fecha/pelicula',
-        data: {
-          'fecha': sesion,
-          'pelicula' : pelicula
-        },
-        dataType: 'json',
-        success: function (salas) { #hay que hacer json.decode?
-            html = "";
-            for (sala in salas){
-                html+="<li sesion='" +sesion + "'   ><a class='sala'></a>"; //meto el numero de filas? mejor no
-                html+=sala;
-                html+="</li>";
-            }
+                alert("sesion");
 
-            $("#salas").html(html);
-        }
+        var sesion = $(this).attr("id");
+        var pelicula = $("#idPeliculaa").attr('valor');
+        var urlX = '/sesion/'+sesion+'/' + pelicula;
+        alert(urlX);
+        $.ajax({
+
+            type: 'POST',
+            url: urlX,
+            data: {
+                'fecha': sesion,
+                'pelicula' : pelicula
+            },
+            dataType: 'json',
+            success: function (salas) { //hay que hacer json.decode?
+                alert("EXITO");
+
+                html = "";
+                for (sala in salas){
+                    html+="<a class='sala' sesion='" +sesion + "' >"; //meto el numero de filas? mejor no
+                    html+=sala;
+                    html+="</a>";
+                }
+
+                $("#salas").html(html);
+            }
       });
 
     });
 
      $(".sala").click(function(){
-        var sala = $(this).parent().val();
-        var sesion = $(this).parent().attr("sesion");
+         alert("sala");
+
+        var sala = $(this).val();
+        var sesion = $(this).attr("sesion");
         var pelicula = $("#idPeliculaa");
 
       $.ajax({
-        url: '/sesion/fecha/pelicula/sala',
+        url: '/sesion/'+ sesion +'/'+pelicula+ '/' + sala,
         data: {
           'pelicula' : pelicula,
           'sesion': sesion,
           'sala' : sala
         },
         dataType: 'json',
-        success: function (sala) { #hay que hacer json.decode?
+        success: function (sala) { //hay que hacer json.decode?
             html = "";
             for (var i = 0; i<sala.filas; i++){
 

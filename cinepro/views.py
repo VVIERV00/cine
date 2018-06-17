@@ -27,28 +27,39 @@ def pelicula(peticion, idPelicula):
         comentarios = Comentario.objects.filter(pelicula = idPelicula)
         sesiones = Sesion.objects.filter(idpelicula = idPelicula)
 
+        listSesiones = {}
+
+
         for sesion in sesiones:
+            carSalas = {}
             id = sesion.idsesion
+            sesas = Sesa.objects.filter(idsesion=id)
+            for sesa in sesas:
+                idSala = sesa.idsala
 
-        sesas = Sesa.objects.filter(idsesion = id)
+            salas = Sala.objects.filter(idsala=idSala)
 
-        for sesa in sesas:
-            idSala = sesa.idsala
+            carSalas["filas"] = range(salas[0].filas)
+            carSalas["col"] = range(salas[0].columnas)
+            carSalas["ult"] = range(salas[0].ultimafila)
 
-        salas = Sala.objects.filter(idsala =  idSala)
+            listSesiones[salas] = carSalas
+            print(listSesiones)
+
+
 
         form = ComentarioForm(peticion.POST)
         if form.is_valid():
-            post = form.save()
-            post.save()
+            comentario = form.save(commit = False)
+            comentario.pelicula = idPelicula
+            comentario.save()
         else:
             form = ComentarioForm()
-            form.fields['pelicula'].initial = idPelicula
 
 
     except:
         raise Http404("No se ha podido encontrar la pelicula %d".format(idPelicula))
-    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones, 'id':idPelicula, 'form': form, 'listaSalas':salas, 'filas':range(salas[0].filas), 'columnas':range(salas[0].columnas), 'ultFila':range(salas[0].ultimafila)})
+    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones, 'id':idPelicula, 'form': form, 'listaSalas':listSesiones, 'filas':range(salas[0].filas), 'columnas':range(salas[0].columnas), 'ultFila':range(salas[0].ultimafila)})
 
 
 """
@@ -125,3 +136,5 @@ def sala(peticion, fecha, pelicula, sala):
 @csrf_exempt
 def reservar(peticion, fecha, pelicula, sala):
     pass
+
+

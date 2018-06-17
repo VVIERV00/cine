@@ -5,4 +5,4 @@ class ComentarioForm(forms.ModelForm):
 
     class Meta:
         model = Comentario
-        fields = ('texto', 'pelicula',)
+        fields = ('texto',)

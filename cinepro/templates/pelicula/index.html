@@ -46,37 +46,34 @@
             <h3>Lista de Sesiones para esta pelicula:</h3>
             <div id="sesiones ">
 
-                    {% for e in sesiones %}
-                            <a id='{{e.idsesion}}' class="sesion" >{{ e.fecha }} </a>
-                    {% endfor %}
-
             </div>
 
             <div id="salas">
-
+                {% load utils %}
                 {{listaSalas}}
-                 {% for sala in listaSalas %}
-                    <p>Sala: {{sala.idsala}}</p>
-                    <p>{{sala}}</p>
-                    {% for fil in filas %}
-                        <div>
-                            {% for col in columnas %}
-                            <input type="checkbox" class="{{fil}}" id="{{col}}">
+                {{sesiones}}
+                {% for salas, values in listaSalas.items|slice:":0" %}
+                    <p>hola</p>
+                    {% for sala in salas%}
+                            {%for fil in values|get_item:"filas" %}
+                                <div>
+                                    {%for co in values|get_item:"col" %}
+                                     <input type="checkbox" class="{{fil}}" id="{{co}}">
+                                    {% endfor %}
+                                </div>
                             {% endfor %}
-                        </div>
-
+                            {%for f in values|get_item:"filas" %}
+                                 <input type="checkbox" id="ult_{{f}}">
+                            {% endfor %}
 
                     {% endfor %}
-                    {% for f in ultFilas %}
-                        {% for col in columnas %}
-                            <input type="checkbox" class="ult_{{f}}" id="ult_{{col}}">
-                        {% endfor %}>
-                    {% endfor %}
-                 {% endfor %}
+                {% endfor %}
+
             </div>
 
-            <div id="butacas">
 
+
+            <div id="butacas">
 
             </div>
         </div>

@@ -45,16 +45,18 @@ def pelicula(peticion, idPelicula):
 """
 
 def sesion(peticion, fecha, pelicula):
+    try:
+        sesion = Sesion.objects.filter(fecha = fecha, idpelicula=pelicula)
 
-    sesion = Sesion.objects.filter(fecha = fecha, idpelicula=pelicula)
+        list = []
 
-    list = []
+        for ses in sesion:
+            list.insert(ses.idsesion)
 
-    for ses in sesion:
-        list.insert(ses.idsesion)
-
-    data = serializers.serialize('json', list)
-    print(data)
+        data = serializers.serialize('json', list)
+        print(data)
+    except:
+        raise Http404('No se ha podido encontrar la sesion')
 
     return render(peticion, 'pelicula/index.html',{'salas':data})
 
@@ -70,26 +72,29 @@ def sesion(peticion, fecha, pelicula):
 """
 def sala(peticion, fecha, pelicula, sala):
 
-    sala = Sala.objects.filter(idsala=sala)
-    sesion = Sesion.objects.filter(fecha=fecha, idpelicula=pelicula)
+    try:
+        sala = Sala.objects.filter(idsala=sala)
+        sesion = Sesion.objects.filter(fecha=fecha, idpelicula=pelicula)
 
-    for ses in sesion:
-        id = ses.idsesion
+        for ses in sesion:
+            id = ses.idsesion
 
-    sesa = Sesa.objects.filter(idsala = sala, idsesion = id)
+        sesa = Sesa.objects.filter(idsala = sala, idsesion = id)
 
-    list = []
+        list = []
 
-    for sa in sala:
-        list.insert(sa.filas)
-        list.insert(sa.columnas)
-        list.insert(sa.ultimafila)
+        for sa in sala:
+            list.insert(sa.filas)
+            list.insert(sa.columnas)
+            list.insert(sa.ultimafila)
 
-    for s in sesa:
-        list.insert(s.idsesion)
+        for s in sesa:
+            list.insert(s.ocupacion)
 
-    data = serializers.serialize('json', list)
-    print(data)
+        data = serializers.serialize('json', list)
+        print(data)
+    except:
+        raise Http404('No se ha podido encontrar la sala')
 
     return render(peticion, 'pelicula/index.html', {'sala': data})
 

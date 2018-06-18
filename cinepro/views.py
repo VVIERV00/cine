@@ -138,16 +138,40 @@ def sala(peticion, pelicula, fecha, sala):
 @csrf_exempt
 def reservar(peticion, fecha, pelicula, sala):
     try:
-
+        viejaSesa =  Sesa.objects.filter(idsesion=fecha, idsala=sala)
         lista = peticion.POST.getlist('ocupacion[]')
         texto =''.join(map(str, lista))
         Sesa.objects.filter(idsesion=fecha, idsala=sala).update(ocupacion=texto)
-        html = "la operacion se ha realizado con exito"
-        print("bien")
+        sesion = Sesion.objects.filter(idpelicula=pelicula)
+        sala = Sala.objects.filter(idsala = sala)
+
+        vOcupacion = viejaSesa.ocupacion
+        posiciones = []
+
+        i = 0
+        while i < len(texto):
+            if(vOcupacion[i] != texto[i] ):
+                posiciones.append(i)
+            i += 1
+        filas = []
+        columnas = []
+
+
+        for val in posiciones:
+            col = val % sala.columnas
+            columnas.insert(col+1)
+            valor = sala.filas
+            resto = 0
+            fila = 0
+            while resto < valor:
+                resto = valor - val
+                fila = fila + 1
+
+            filas.insert(fila+1)
+
     except:
-        print("mal")
         return HttpResponse("Ocurrio un error en la reserva")
-    return HttpResponse(html)
+    return render(peticion,  'pelicula/confirmacion.html', {'sesion':sesion[0], 'columnas':columnas, 'filas':filas })
 
 
 

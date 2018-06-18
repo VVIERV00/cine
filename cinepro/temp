@@ -1,0 +1,87 @@
+def pelicula(peticion, idPelicula):
+    try:
+        pelicula = Pelicula.objects.filter(idpelicula = idPelicula)
+        comentarios = Comentario.objects.filter(pelicula = idPelicula)
+        sesiones = Sesion.objects.filter(idpelicula = idPelicula)
+
+        #listSesiones = {}
+        salasEnviar = {}
+
+        for sesionI in sesiones:
+
+            sesas = Sesa.objects.filter(idsesion=sesionI.idsesion)
+            salas = []
+            for sesa in sesas:
+                salas.insert(Sala.objects.filter(idsala=sesa.idsala))
+            for sala in salas:
+
+                salasEnviar[sala.idsala]["filas"] = range(sala.filas)
+                salasEnviar[sala.idsala]["col"] = range(sala.columnas)
+                salasEnviar[sala.idsala]["ult"] = range(sala.ultimafila)
+
+            #listSesiones[salas] = salasEnviar
+            print("test " + salasEnviar)
+
+        form = ComentarioForm(peticion.POST)
+        if form.is_valid():
+            comentario = form.save(commit = False)
+            comentario.pelicula = idPelicula
+            comentario.save()
+        else:
+            form = ComentarioForm()
+
+
+    except:
+        raise Http404("No se ha podido encontrar la pelicula %d".format(idPelicula))
+    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones, 'id':idPelicula, 'form': form, 'listaSalas':salasEnviar, })
+
+
+
+
+
+    {% load utils %}
+                {% for sala in listaSalas %}
+                    <a class="salaX" href=""> {{sala.id}} </a>
+
+                {% endfor %}
+                {{sesiones}}
+
+
+
+
+
+"""
+            for sala in idSala:
+        salas.append(Sala.objects.filter(idsala=sala))
+
+    for obj in salas:
+
+    print("kkk")
+    print(salas)
+    carSalas["filas"] = range(salas[0].filas)
+    carSalas["col"] = range(salas[0].columnas)
+    carSalas["ult"] = range(salas[0].ultimafila)
+
+    listSesiones[salas] = carSalas
+    print("texto a")
+    print(listSesiones)
+
+    """
+
+
+
+
+{% for k in sesiones|get_item:key %}
+
+                        <a class="salaX" href="/pelicula/{{id}}/{{ k|get_item:idSesion }}/{{ k|get_item:sala }}"> {{ k|get_item:'sala' }} </a>
+                    {% endfor %}
+
+
+
+                     {% for k in sesiones|get_item:key %}
+                        <p>{{k}}</p>
+                        <a class="salaX" href="/pelicula/{{id}}/{{ k|get_item:idSesion }}/{{ k|get_item:sala }}"> {{ k|get_item:'sala' }} </a>
+
+
+
+                    {% endfor %}

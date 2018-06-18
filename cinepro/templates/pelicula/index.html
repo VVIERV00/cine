@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script type="text/jscript" src="../../static/js/pelicula.js"></script>
-    <link rel="stylesheet" href="../../static/css/pelicula.css" type="text/css">
+    <script type="text/jscript" src="{{ruta}}static/js/pelicula.js"></script>
+    <link rel="stylesheet" href="{{ruta}}static/css/pelicula.css" type="text/css">
     <title>{{pelicula.titulo}}</title>
 </head>
 <body>
@@ -12,7 +12,7 @@
         <div class="lado">
             {% for pelicula in movie %}
             <div id="foto">
-                <img src="../../static/images/{{pelicula.titulo}}.jpg" alt="Caratula" height="420" width="420">
+                <img src="{{ruta}}static/images/{{pelicula.titulo}}.jpg" alt="Caratula" height="420" width="420">
             </div>
             <div id="datos">
                     <p><strong>Título: </strong> {{pelicula.titulo}}</p>
@@ -35,7 +35,7 @@
                 <form method="POST" class="comentario-form">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="save btn btn-default">Añadir</button>
+                    <button type="submit" id="botonComen" class="save btn btn-default">Añadir</button>
                 </form>
                 {% endblock %}
 
@@ -44,17 +44,31 @@
 
         <div class="lado">
             <h3>Lista de Sesiones para esta pelicula:</h3>
-            <div id="sesiones ">
+            <div id="sesiones">
+                {% load utils %}
+                {% for key in sesiones %}
 
+                    <p class="sesionX"> {{sesiones|get_item:key|get_item:'fecha'}}.   Salas:</p>
+
+                    {% for k in sesiones|get_item:key|get_item:'sala' %}
+                        <a class="salaX" href="/pelicula/{{id}}/{{key}}/{{k}}"> {{ k }} </a>
+                    {% endfor %}
+
+                {% endfor %}
             </div>
 
             <div id="salas">
-                {% load utils %}
-                {{listaSalas}}
-                {{sesiones}}
-                {% for salas, values in listaSalas.items|slice:":0" %}
-                    <p>hola</p>
-                    {% for sala in salas%}
+
+                {% if listaSalas %}
+                    <p>{{listaSalas}}</p>
+                    {% for salas in listaSalas.items|slice:":0" %}
+
+
+                    {% endfor %}
+
+                    {% for salas in listaSalas.items|slice:":0" %}
+                        <p>hola</p>
+                        {% for sala in salas %}
                             {%for fil in values|get_item:"filas" %}
                                 <div>
                                     {%for co in values|get_item:"col" %}
@@ -66,8 +80,10 @@
                                  <input type="checkbox" id="ult_{{f}}">
                             {% endfor %}
 
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
+
+                {% endif %}
 
             </div>
 
@@ -76,6 +92,7 @@
             <div id="butacas">
 
             </div>
+            <input type="button" id="botonReserva">Reservar </input>
         </div>
     </div>
 </body>

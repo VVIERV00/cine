@@ -20,33 +20,27 @@ def index(peticion):
         raise Http404('No se ha podido encontrar la cartelera')
     return render(peticion, 'cartelera/index.html', {'listaPeliculas': lista, 'listaGeneros':generos})
 
+
+
+
+
 @csrf_exempt
 def pelicula(peticion, idPelicula):
+
     try:
         pelicula = Pelicula.objects.filter(idpelicula = idPelicula)
         comentarios = Comentario.objects.filter(pelicula = idPelicula)
         sesiones = Sesion.objects.filter(idpelicula = idPelicula)
 
         listSesiones = {}
-
-
+        idSala = []
         for sesion in sesiones:
-            carSalas = {}
             id = sesion.idsesion
             sesas = Sesa.objects.filter(idsesion=id)
             for sesa in sesas:
-                idSala = sesa.idsala
+                idSala.append(sesa.idsala)
 
-            salas = Sala.objects.filter(idsala=idSala)
-
-            carSalas["filas"] = range(salas[0].filas)
-            carSalas["col"] = range(salas[0].columnas)
-            carSalas["ult"] = range(salas[0].ultimafila)
-
-            listSesiones[salas] = carSalas
-            print(listSesiones)
-
-
+            listSesiones[sesion.idsesion] = {'sala': idSala, 'fecha': sesion.fecha}
 
         form = ComentarioForm(peticion.POST)
         if form.is_valid():
@@ -55,11 +49,11 @@ def pelicula(peticion, idPelicula):
             comentario.save()
         else:
             form = ComentarioForm()
-
+        print(listSesiones)
 
     except:
         raise Http404("No se ha podido encontrar la pelicula %d".format(idPelicula))
-    return render(peticion, 'pelicula/index.html', {'movie':pelicula, 'comentarios':comentarios, 'sesiones':sesiones, 'id':idPelicula, 'form': form, 'listaSalas':listSesiones, 'filas':range(salas[0].filas), 'columnas':range(salas[0].columnas), 'ultFila':range(salas[0].ultimafila)})
+    return render(peticion, 'pelicula/index.html', { 'ruta': "../", 'movie':pelicula, 'comentarios':comentarios, 'sesiones':listSesiones, 'id':idPelicula, 'form': form})
 
 
 """
@@ -68,22 +62,7 @@ def pelicula(peticion, idPelicula):
 
 
 """
-@csrf_exempt
-def sesion(peticion, fecha, pelicula):
-    try:
-        sesion = Sesion.objects.filter(fecha = fecha, idpelicula=pelicula)
 
-        list = []
-
-        for ses in sesion:
-            list.insert(ses.idsesion)
-
-        data = serializers.serialize('json', list)
-        print(data)
-    except:
-        raise Http404('No se ha podido encontrar la sesion')
-
-    return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 
@@ -96,33 +75,47 @@ def sesion(peticion, fecha, pelicula):
 
 """
 @csrf_exempt
-def sala(peticion, fecha, pelicula, sala):
-
+def sala(peticion, pelicula, fecha, sala):
+    print("ENTRAAAA")
     try:
-        sala = Sala.objects.filter(idsala=sala)
-        sesion = Sesion.objects.filter(fecha=fecha, idpelicula=pelicula)
+        peliculaO = Pelicula.objects.filter(idpelicula=pelicula)
+        comentarios = Comentario.objects.filter(pelicula=pelicula)
+        sesiones = Sesion.objects.filter(idpelicula=pelicula)
 
-        for ses in sesion:
-            id = ses.idsesion
+        listSesiones = {}
+        idSala = []
+        for sesion in sesiones:
+            id = sesion.idsesion
+            sesas = Sesa.objects.filter(idsesion=id)
 
-        sesa = Sesa.objects.filter(idsala = sala, idsesion = id)
+            for sesa in sesas:
+                idSala.append(sesa.idsala)
+
+            listSesiones[sesion.idsesion] = {'sala': idSala, 'fecha': sesion.fecha}
+
+        form = ComentarioForm(peticion.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.pelicula = pelicula
+            comentario.save()
+        else:
+            form = ComentarioForm()
+
+        #segunda parte
+        salaO = Sala.objects.filter(idsala=sala)
+
+        sesa = Sesa.objects.filter(idsala = sala, idsesion = fecha)
 
         list = []
 
-        for sa in sala:
-            list.insert(sa.filas)
-            list.insert(sa.columnas)
-            list.insert(sa.ultimafila)
+        list.append(salaO[0].filas)
+        list.append(salaO[0].columnas)
+        list.append(salaO[0].ultimafila)
 
-        for s in sesa:
-            list.insert(s.ocupacion)
-
-        data = serializers.serialize('json', list)
-        print(data)
+        list.append(sesa[0].ocupacion)
     except:
-        raise Http404('No se ha podido encontrar la sala')
-
-    return HttpResponse(json.dumps(data), content_type='application/json')
+        raise Http404("No se ha podido encontrar la sala")
+    return render(peticion, 'pelicula/index.html', { 'ruta': "../../../",'listaSalas':list, 'movie':peliculaO, 'comentarios':comentarios, 'sesiones':listSesiones, 'id':pelicula, 'form': form})
 
 
 """

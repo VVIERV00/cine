@@ -23,9 +23,11 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('cartelera', views.index, name='index'),
     path('pelicula/<int:idPelicula>', views.pelicula, name='pelicula'),
+    path('pelicula/<int:pelicula>/<int:fecha>/<int:sala>', views.sala, name='sala'),
+
     path('pelicula/<int:idPelicula>/confirmacion', views.pelicula, name='confirmacion'),
-    path('sesion/<int:fecha>/<int:pelicula>', views.sesion, name='sesion'),
-    path('sesion/<int:fecha>/<int:pelicula>/<int:sala>', views.sala, name='sala'),
+
     path('sesion/<int:fecha>/<int:pelicula>/<int:sala>/reservar', views.reservar, name='reservar')
 
 ]
+

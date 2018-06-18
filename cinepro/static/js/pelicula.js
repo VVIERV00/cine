@@ -38,7 +38,10 @@ $(document).ready(function(){
             }
       });
 
+
     });
+
+
 
      $(".sala").click(function(){
          alert("sala");

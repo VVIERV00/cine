@@ -85,3 +85,10 @@ def pelicula(peticion, idPelicula):
 
 
                     {% endfor %}
+
+
+
+
+input[checked = "true", type = "checkbox"]{
+    pointer-events: none;
+}

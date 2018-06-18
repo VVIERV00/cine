@@ -56,14 +56,16 @@
 
                 {% endfor %}
             </div>
-
-            <div id="salas">
+            <div id="X">
+            <p id="salas">
                  {% if listaSalas %}
-                    <p>{{listaSalas}}
+                    <p>
                             {%for fil in listaSalas.0 %}
                                 <div>
                                     {%for co in  listaSalas.1 %}
-                                     <input type="checkbox" class="{{fil}}" id="{{co}}">
+
+
+                                     <input type="checkbox" class="{{fil}}" id="{{co}}" >
                                     {% endfor %}
                                 </div>
                             {% endfor %}
@@ -71,7 +73,13 @@
                                  <input type="checkbox" id="ult_{{f}}">
                             {% endfor %}
 
+                <input type="button" id="botonReserva"> Reservar </input>
+
+                <input type="button" hidden id="trigger" onclick="cargar({{listaSalas.4}})"></input>
+                <p id="confirmacion"> Status</p>
+                <p id="arraySecreto" hidden valor="{{listaSalas.3}}"> </p>
                 {% endif %}
+
 
             </div>
 
@@ -80,7 +88,7 @@
             <div id="butacas">
 
             </div>
-            <input type="button" id="botonReserva">Reservar </input>
+
         </div>
     </div>
 </body>

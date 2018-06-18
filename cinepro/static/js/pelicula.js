@@ -41,6 +41,43 @@ $(document).ready(function(){
 
     });
 
+    $("#botonReserva").click(function(){ //fecha pelicula sala
+        var urlX =  window.location.pathname + "/reservar";
+        var seleccionados = $("#salas input");
+        var lista = [];
+        var indice = 0;
+        seleccionados.each(function(){
+
+            if($(this).is(":checked")){
+                lista
+                lista[indice] = "1";
+            }else{
+                lista[indice] = "0";
+            }
+            indice++;
+        });
+        for (; indice<300; indice++){
+            lista[indice] = "0";
+        }
+
+        $.ajax({
+
+            type: 'POST',
+            url: urlX,
+            data: {
+                'ocupacion': lista,
+            },
+            dataType: 'json',
+            success: function (resultado) { //hay que hacer json.decode?
+                alert("EXITO");
+
+
+                $("#confirmacion").html(resultado.responseText);
+            }
+        });
+
+    });
+
 
 
      $(".sala").click(function(){
@@ -80,4 +117,22 @@ $(document).ready(function(){
       });
 
     });
+
+
+       $("#trigger").click();
+
 });
+
+
+    function cargar(){
+        alert("se llama")
+        var array = $("#arraySecreto").attr("valor");
+        alert(array)
+        $("#X input").each(function(index, element){
+
+            if (array[index] == "1"){
+                $(element).prop('checked', true);
+
+            }
+        })
+    }

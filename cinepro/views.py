@@ -9,6 +9,8 @@ from django.core import serializers
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
+import operator
+
 @csrf_exempt
 def index(peticion):
     try:
@@ -111,11 +113,12 @@ def sala(peticion, pelicula, fecha, sala):
         list.append(range(salaO[0].filas))
         list.append(range(salaO[0].columnas))
         list.append(range(salaO[0].ultimafila))
-
         list.append(sesa[0].ocupacion)
+
+        print(list)
     except:
         raise Http404("No se ha podido encontrar la sala")
-    return render(peticion, 'pelicula/index.html', { 'ruta': "../../../",'listaSalas':list, 'movie':peliculaO, 'comentarios':comentarios, 'sesiones':listSesiones, 'id':pelicula, 'form': form})
+    return render(peticion, 'pelicula/index.html', { 'ruta': "../../../",'listaSalas':list, 'ncol':salaO[0].columnas, 'nfil':salaO[0].filas, 'movie':peliculaO, 'comentarios':comentarios, 'sesiones':listSesiones, 'id':pelicula, 'form': form})
 
 
 """
@@ -128,6 +131,18 @@ def sala(peticion, pelicula, fecha, sala):
 """
 @csrf_exempt
 def reservar(peticion, fecha, pelicula, sala):
-    pass
+    try:
+
+        lista = peticion.POST.getlist('ocupacion[]')
+        texto =''.join(map(str, lista))
+        Sesa.objects.filter(idsesion=fecha, idsala=sala).update(ocupacion=texto)
+        html = "la operacion se ha realizado con exito"
+        print("bien")
+    except:
+        print("mal")
+        return HttpResponse("Ocurrio un error en la reserva")
+    return HttpResponse(html)
+
+
 
 

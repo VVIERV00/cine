@@ -142,21 +142,27 @@ def reservar(peticion, fecha, pelicula, sala):
         lista = peticion.POST.getlist('ocupacion[]')
         texto =''.join(map(str, lista))
         Sesa.objects.filter(idsesion=fecha, idsala=sala).update(ocupacion=texto)
-        sesion = Sesion.objects.filter(idpelicula=pelicula)
-        sala = Sala.objects.filter(idsala = sala)
+        idSes = viejaSesa[0].idsesion
+        sesion = Sesion.objects.filter(idsesion=idSes)
+        sala = Sala.objects.filter(idsala=sala)
 
-        vOcupacion = viejaSesa.ocupacion
+        vOcupacion = viejaSesa[0].ocupacion
+        print("xd")
+        print(viejaSesa[0].ocupacion)
         posiciones = []
-
-        i = 0
-        while i < len(texto):
-            if(vOcupacion[i] != texto[i] ):
-                posiciones.append(i)
-            i += 1
         filas = []
         columnas = []
 
-
+        i = 0
+        print(vOcupacion)
+        print(len(texto))
+        while i < len(texto):
+            print("hola")
+            if vOcupacion[i] != texto[i] :
+                posiciones.append(i)
+                print("holaa")
+            i += 1
+        print(posiciones)
         for val in posiciones:
             col = val % sala.columnas
             columnas.insert(col+1)

@@ -124,7 +124,7 @@ def sala(peticion, pelicula, fecha, sala):
 
     except:
         raise Http404("No se ha podido encontrar la sala")
-    return render(peticion, 'pelicula/index.html', { 'ruta': "../../../",'listaSalas':list, 'ncol':salaO[0].columnas, 'nfil':salaO[0].filas, 'movie':peliculaO, 'comentarios':comentarios, 'sesiones':listSesiones, 'id':pelicula, 'form': form})
+    return render(peticion, 'pelicula/index.html', {'ruta': "../../../",'listaSalas':list, 'ncol':salaO[0].columnas, 'nfil':salaO[0].filas, 'movie':peliculaO, 'comentarios':comentarios, 'sesiones':listSesiones, 'id':pelicula, 'form': form})
 
 
 """

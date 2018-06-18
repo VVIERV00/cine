@@ -32,7 +32,10 @@ $(document).ready(function(){
 
 
     });
-
+    /*var form = $('<form action="' + urlX + '" method="post">' +
+      '<input type="text" name="api_url" value="' + Return_URL + '" />' +
+        '</form>');
+    $('body').append(form);*/
     $("#botonReserva").click(function(){ //fecha pelicula sala
         var urlX =  window.location.pathname + "/reservar";
         var seleccionados = $(':checkbox')
@@ -51,7 +54,20 @@ $(document).ready(function(){
             lista[indice] = "0";
         }
 
-        $.ajax({
+
+        /*$.extend({
+         redirectPost: function(location, args){
+            var form = '';
+            $.each( args, function( key, value ) {
+                value = value.split('"').join('\"')
+                form += '<input type="hidden" name="'+key+'" value="'+value+'">';
+            });
+               $('<form action="' + location + '" method="POST">' + form + '</form>').appendTo($(document.body)).submit();
+        }
+        });*/
+
+         post(urlX, {'ocupacion': lista}, "POST");
+       /* $.ajax({
 
             type: 'POST',
             url: urlX,
@@ -62,9 +78,9 @@ $(document).ready(function(){
             success: function (resultado) { //hay que hacer json.decode?
                 $("#confirmacion").html(resultado.responseText);
             }
-        });
+        });*/
 
-        alert("Su reserva se ha efectuado con éxito");
+        //alert("Su reserva se ha efectuado con éxito");
 
     });
 
@@ -124,3 +140,27 @@ $(document).ready(function(){
             }
         })
     }
+
+    function post(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
+
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}

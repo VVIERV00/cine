@@ -36,7 +36,9 @@ def pelicula(peticion, idPelicula):
 
         listSesiones = {}
         idSala = []
+        print(sesiones)
         for sesion in sesiones:
+            idSala = []
             id = sesion.idsesion
             sesas = Sesa.objects.filter(idsesion=id)
             for sesa in sesas:
@@ -86,7 +88,11 @@ def sala(peticion, pelicula, fecha, sala):
 
         listSesiones = {}
         idSala = []
+        print("hola")
+
+        print("hola")
         for sesion in sesiones:
+            idSala = []
             id = sesion.idsesion
             sesas = Sesa.objects.filter(idsesion=id)
 
@@ -115,7 +121,7 @@ def sala(peticion, pelicula, fecha, sala):
         list.append(range(salaO[0].ultimafila))
         list.append(sesa[0].ocupacion)
 
-        print(list)
+
     except:
         raise Http404("No se ha podido encontrar la sala")
     return render(peticion, 'pelicula/index.html', { 'ruta': "../../../",'listaSalas':list, 'ncol':salaO[0].columnas, 'nfil':salaO[0].filas, 'movie':peliculaO, 'comentarios':comentarios, 'sesiones':listSesiones, 'id':pelicula, 'form': form})

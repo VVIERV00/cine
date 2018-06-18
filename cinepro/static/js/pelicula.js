@@ -1,12 +1,4 @@
 $(document).ready(function(){
-    $("#botonComentar").click(function(){
-
-        var id = $(this).attr('id');
-        alert("Hola" + $("#idPeliculaa"));
-        var comentario = $(this).attr('textoComentario').val();
-
-        alert(id + " " + comentario);
-    });
 
     $(".sesion").click(function(){
                 alert("sesion");
@@ -43,13 +35,12 @@ $(document).ready(function(){
 
     $("#botonReserva").click(function(){ //fecha pelicula sala
         var urlX =  window.location.pathname + "/reservar";
-        var seleccionados = $("#salas input");
+        var seleccionados = $(':checkbox')
         var lista = [];
         var indice = 0;
-        seleccionados.each(function(){
 
+        seleccionados.each(function(){
             if($(this).is(":checked")){
-                lista
                 lista[indice] = "1";
             }else{
                 lista[indice] = "0";
@@ -69,12 +60,11 @@ $(document).ready(function(){
             },
             dataType: 'json',
             success: function (resultado) { //hay que hacer json.decode?
-                alert("EXITO");
-
-
                 $("#confirmacion").html(resultado.responseText);
             }
         });
+
+        alert("Su reserva se ha efectuado con éxito");
 
     });
 
@@ -125,9 +115,7 @@ $(document).ready(function(){
 
 
     function cargar(){
-        alert("se llama")
         var array = $("#arraySecreto").attr("valor");
-        alert(array)
         $("#X input").each(function(index, element){
 
             if (array[index] == "1"){

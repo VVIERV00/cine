@@ -49,7 +49,7 @@
                 {% for key in sesiones %}
 
                     <p class="sesionX"> {{sesiones|get_item:key|get_item:'fecha'}}.   Salas:</p>
-
+                    {{sesiones}}
                     {% for k in sesiones|get_item:key|get_item:'sala' %}
                         <a class="salaX" href="/pelicula/{{id}}/{{key}}/{{k}}"> {{ k }} </a>
                     {% endfor %}

@@ -108,9 +108,9 @@ def sala(peticion, pelicula, fecha, sala):
 
         list = []
 
-        list.append(salaO[0].filas)
-        list.append(salaO[0].columnas)
-        list.append(salaO[0].ultimafila)
+        list.append(range(salaO[0].filas))
+        list.append(range(salaO[0].columnas))
+        list.append(range(salaO[0].ultimafila))
 
         list.append(sesa[0].ocupacion)
     except:

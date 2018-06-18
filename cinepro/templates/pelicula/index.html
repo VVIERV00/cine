@@ -58,30 +58,18 @@
             </div>
 
             <div id="salas">
-
-                {% if listaSalas %}
-                    <p>{{listaSalas}}</p>
-                    {% for salas in listaSalas.items|slice:":0" %}
-
-
-                    {% endfor %}
-
-                    {% for salas in listaSalas.items|slice:":0" %}
-                        <p>hola</p>
-                        {% for sala in salas %}
-                            {%for fil in values|get_item:"filas" %}
+                 {% if listaSalas %}
+                    <p>{{listaSalas}}
+                            {%for fil in listaSalas.0 %}
                                 <div>
-                                    {%for co in values|get_item:"col" %}
+                                    {%for co in  listaSalas.1 %}
                                      <input type="checkbox" class="{{fil}}" id="{{co}}">
                                     {% endfor %}
                                 </div>
                             {% endfor %}
-                            {%for f in values|get_item:"filas" %}
+                            {%for f in  listaSalas.2 %}
                                  <input type="checkbox" id="ult_{{f}}">
                             {% endfor %}
-
-                        {% endfor %}
-                    {% endfor %}
 
                 {% endif %}
 
